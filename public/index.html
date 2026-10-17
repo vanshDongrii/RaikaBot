@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#07090E">
+  <meta name="description" content="Raika Games - 100% English Telegram Demo Arcade with provably fair games, daily bonuses, and leaderboards.">
+  <title>Raika Games • Telegram Mini App</title>
+  
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body class="telegram-simulator-mode">
+  <div class="simulator-container">
+    <div class="mobile-shell">
+      
+      <!-- Simulated Telegram Bezel Bar -->
+      <div class="tg-sim-bar" id="tg-sim-bar">
+        <span class="tg-sim-title">
+          <span>Raika Games</span>
+          <span class="tg-sim-badge">English Only</span>
+        </span>
+        <span class="tg-sim-menu">•••</span>
+      </div>
+
+      <!-- App Header -->
+      <header class="app-header">
+        <div class="header-user-info" id="header-user-profile">
+          <div class="user-avatar" id="user-avatar-initial">A</div>
+          <div class="user-details">
+            <span class="user-name" id="user-display-name">Player</span>
+            <span class="user-badge">⭐ Demo Tier</span>
+          </div>
+        </div>
+
+        <div class="header-balance-pill" id="header-balance-container">
+          <span class="balance-coin-icon">🪙</span>
+          <span class="balance-value-text" id="header-balance-amount">1,000</span>
+          <button type="button" class="btn-header-topup" id="header-cashier-btn">🏦 Cashier</button>
+        </div>
+      </header>
+
+      <!-- Live Community Wins Ticker -->
+      <div class="live-ticker-bar">
+        <div class="ticker-label">
+          <span class="ticker-pulse-dot"></span>
+          <span>LIVE WINS</span>
+        </div>
+        <div class="ticker-scroll-wrapper">
+          <div class="ticker-content" id="live-wins-ticker-content">
+            <div class="ticker-item"><span class="ticker-player">Alex R.</span><span class="ticker-game">CRASH</span><span class="ticker-win">+420 Coins</span></div>
+            <div class="ticker-item"><span class="ticker-player">Sophia C.</span><span class="ticker-game">WHEEL</span><span class="ticker-win">+1,000 Coins</span></div>
+            <div class="ticker-item"><span class="ticker-player">Liam V.</span><span class="ticker-game">COINFLIP</span><span class="ticker-win">+196 Coins</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Application Views -->
+      <main class="app-content">
+
+        <!-- ========================================== -->
+        <!-- SCREEN 1: HOME                             -->
+        <!-- ========================================== -->
+        <section class="app-screen active" id="screen-home">
+          <!-- Hero Card -->
+          <div class="home-hero-card">
+            <div class="hero-subtitle">Telegram Demo Arcade</div>
+            <h1 class="hero-title" id="home-greeting-text">Welcome back, Player!</h1>
+            <p class="hero-desc">Play 5 exciting provably fair games, collect free daily streak rewards, and dominate the global leaderboards.</p>
+            <div class="hero-actions-row">
+              <button type="button" class="action-btn btn-primary btn-large glow-gold nav-item" data-tab="games">
+                <span>Play Games</span>
+              </button>
+              <button type="button" class="btn-back-lobby nav-item" data-tab="cashier" id="home-cashier-btn">
+                <span>🏦 Cashier</span>
+              </button>
+              <button type="button" class="btn-back-lobby" id="home-invite-friends-btn">
+                <span>👥 Invite</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Daily Streak Banner -->
+          <div class="daily-streak-banner" id="home-daily-banner">
+            <div class="streak-banner-left">
+              <span class="streak-banner-icon">🎁</span>
+              <div>
+                <div class="streak-banner-title">Daily Bonus Ready!</div>
+                <div class="streak-banner-desc">Claim free demo coins to keep your streak going.</div>
+              </div>
+            </div>
+            <button type="button" class="streak-banner-btn" id="home-claim-bonus-btn">Claim</button>
+          </div>
+
+          <!-- Featured Games Grid -->
+          <div class="section-header">
+            <h2 class="section-title">🎲 Featured Games</h2>
+            <button type="button" class="btn-back-lobby nav-item" data-tab="games">View All</button>
+          </div>
+
+          <div class="game-cards-grid">
+            <!-- Coin Flip Card -->
+            <div class="game-card-action" data-game="coinflip" id="home-card-coinflip">
+              <div class="game-card-icon">🪙</div>
+              <h3 class="game-card-title">Coin Flip</h3>
+              <div class="game-card-meta">Classic 50/50 action</div>
+              <div class="game-card-footer">
+                <span class="card-multiplier-pill">1.96x</span>
+                <span class="card-play-arrow">➔</span>
+              </div>
+            </div>
+
+            <!-- Dice Roll Card -->
+            <div class="game-card-action" data-game="dice" id="home-card-dice">
+              <div class="game-card-icon">🎲</div>
+              <h3 class="game-card-title">Dice Roll</h3>
+              <div class="game-card-meta">Adjustable risk & odds</div>
+              <div class="game-card-footer">
+                <span class="card-multiplier-pill">Up to 49x</span>
+                <span class="card-play-arrow">➔</span>
+              </div>
+            </div>
+
+            <!-- Crash Rocket Card -->
+            <div class="game-card-action" data-game="crash" id="home-card-crash">
+              <div class="game-card-icon">🚀</div>
+              <h3 class="game-card-title">Crash Rocket</h3>
+              <div class="game-card-meta">Cash out before crash</div>
+              <div class="game-card-footer">
+                <span class="card-multiplier-pill">Up to 250x</span>
+                <span class="card-play-arrow">➔</span>
+              </div>
+            </div>
+
+            <!-- Mines Card -->
+            <div class="game-card-action" data-game="mines" id="home-card-mines">
+              <div class="game-card-icon">💎</div>
+              <h3 class="game-card-title">Mines</h3>
+              <div class="game-card-meta">5x5 Gem exploration</div>
+              <div class="game-card-footer">
+                <span class="card-multiplier-pill">Up to 100x</span>
+                <span class="card-play-arrow">➔</span>
+              </div>
+            </div>
+
+            <!-- Lucky Wheel Card -->
+            <div class="game-card-action" data-game="wheel" id="home-card-wheel" style="grid-column: span 2;">
+              <div class="game-card-icon">🎡</div>
+              <h3 class="game-card-title">Lucky Wheel</h3>
+              <div class="game-card-meta">Spin the neon wheel for up to 10x jackpot!</div>
+              <div class="game-card-footer">
+                <span class="card-multiplier-pill">10x Jackpot</span>
+                <span class="card-play-arrow">➔</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 2: GAMES LOBBY & PLAYGROUND         -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-games">
+          <!-- Lobby View -->
+          <div id="lobby-view">
+            <div class="section-header">
+              <div>
+                <h2 class="section-title">🎮 Game Lobby</h2>
+                <p class="game-description">Pick a game to start playing with your free demo coins.</p>
+              </div>
+            </div>
+
+            <div class="game-cards-grid" style="margin-top: 14px;">
+              <div class="game-card-action lobby-game-card" data-game="coinflip" id="lobby-card-coinflip">
+                <div class="game-card-icon">🪙</div>
+                <h3 class="game-card-title">Coin Flip</h3>
+                <div class="game-card-meta">50% chance • 1.96x multiplier</div>
+                <div class="game-card-footer">
+                  <span class="game-badge badge-emerald">Quick Play</span>
+                  <span class="card-play-arrow">➔</span>
+                </div>
+              </div>
+
+              <div class="game-card-action lobby-game-card" data-game="dice" id="lobby-card-dice">
+                <div class="game-card-icon">🎲</div>
+                <h3 class="game-card-title">Dice Roll</h3>
+                <div class="game-card-meta">Slide target • Custom odds</div>
+                <div class="game-card-footer">
+                  <span class="game-badge badge-blue">Adjustable</span>
+                  <span class="card-play-arrow">➔</span>
+                </div>
+              </div>
+
+              <div class="game-card-action lobby-game-card" data-game="crash" id="lobby-card-crash">
+                <div class="game-card-icon">🚀</div>
+                <h3 class="game-card-title">Crash Rocket</h3>
+                <div class="game-card-meta">Live multiplier curve</div>
+                <div class="game-card-footer">
+                  <span class="game-badge badge-purple">High Multiplier</span>
+                  <span class="card-play-arrow">➔</span>
+                </div>
+              </div>
+
+              <div class="game-card-action lobby-game-card" data-game="mines" id="lobby-card-mines">
+                <div class="game-card-icon">💎</div>
+                <h3 class="game-card-title">Mines</h3>
+                <div class="game-card-meta">Dodge mines, find gems</div>
+                <div class="game-card-footer">
+                  <span class="game-badge badge-emerald">Strategy</span>
+                  <span class="card-play-arrow">➔</span>
+                </div>
+              </div>
+
+              <div class="game-card-action lobby-game-card" data-game="wheel" id="lobby-card-wheel" style="grid-column: span 2;">
+                <div class="game-card-icon">🎡</div>
+                <h3 class="game-card-title">Lucky Wheel</h3>
+                <div class="game-card-meta">Spin neon wheel for 10x jackpot!</div>
+                <div class="game-card-footer">
+                  <span class="game-badge badge-gold">Jackpot</span>
+                  <span class="card-play-arrow">➔</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Game Playground Container -->
+          <div id="game-play-view" style="display: none;">
+            <div class="back-to-lobby-bar">
+              <button type="button" class="btn-back-lobby" id="btn-back-to-lobby">
+                <span>← Back to Games</span>
+              </button>
+            </div>
+            <div id="game-container-target"></div>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 3: DAILY BONUS                      -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-bonus">
+          <div class="game-header">
+            <h2 class="game-title">🎁 Daily Bonus Streak</h2>
+            <p class="game-description">Log in every 24 hours to claim escalating demo coin rewards. Keep your streak alive!</p>
+          </div>
+
+          <div class="user-rank-banner" id="bonus-streak-status-text" style="margin-bottom: 16px;">
+            Current Streak: Day 1 of 7
+          </div>
+
+          <div class="bonus-calendar-grid" id="bonus-streak-calendar">
+            <!-- Rendered by app.js -->
+          </div>
+
+          <button type="button" class="action-btn btn-primary btn-large glow-gold" id="btn-claim-daily-bonus" style="width: 100%;">
+            <span>Claim Your Daily Bonus</span>
+          </button>
+
+          <div class="bonus-timer-banner" id="bonus-timer-text">
+            Log in daily to claim your rewards!
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 4: LEADERBOARD                      -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-leaderboard">
+          <div class="game-header">
+            <h2 class="game-title">🏆 Global Leaderboard</h2>
+            <p class="game-description">Top players ranked by total demo coin winnings.</p>
+          </div>
+
+          <div class="leaderboard-podium" id="leaderboard-podium-target">
+            <!-- Top 3 podium rendered dynamically -->
+          </div>
+
+          <div class="leaderboard-list" id="leaderboard-list-target">
+            <!-- Ranks 4-10 rendered dynamically -->
+          </div>
+
+          <div class="user-rank-banner" id="leaderboard-user-rank-banner">
+            Your Position: Calculating...
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 5: GAME HISTORY                     -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-history">
+          <div class="game-header">
+            <h2 class="game-title">📜 Game History</h2>
+            <p class="game-description">Review your recent game outcomes, stakes, and payouts.</p>
+          </div>
+
+          <div class="history-filter-row">
+            <button type="button" class="filter-btn active" id="btn-history-filter-all">All Matches</button>
+            <button type="button" class="filter-btn" id="btn-history-filter-wins">Wins Only</button>
+            <button type="button" class="filter-btn" id="btn-history-filter-losses">Losses Only</button>
+          </div>
+
+          <div class="history-items-list" id="history-list-target">
+            <!-- Matches rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 6: PROFILE                          -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-profile">
+          <div class="profile-hero">
+            <div class="profile-avatar-large">👤</div>
+            <h2 class="profile-title" id="profile-player-name">Player</h2>
+            <span class="profile-id-text" id="profile-user-id">ID: demo_player_1</span>
+
+            <div class="profile-balance-box">
+              <div class="profile-balance-label">Demo Coin Balance</div>
+              <div class="profile-balance-num" id="profile-demo-balance">1,000 Demo Coins</div>
+              <div style="display: flex; gap: 8px;">
+                <button type="button" class="action-btn btn-primary btn-large glow-gold nav-item" data-tab="cashier" style="flex: 1;">
+                  <span>🏦 Cashier</span>
+                </button>
+                <button type="button" class="btn-back-lobby" id="btn-profile-refill" style="flex: 1; justify-content: center;">
+                  <span>🔄 Refill (+500)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-header">
+            <h3 class="section-title">📊 Career Statistics</h3>
+          </div>
+
+          <div class="profile-stats-grid">
+            <div class="stat-card">
+              <span class="stat-card-label">Total Matches</span>
+              <span class="stat-card-value text-blue" id="stat-total-games">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card-label">Matches Won</span>
+              <span class="stat-card-value text-emerald" id="stat-games-won">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card-label">Win Percentage</span>
+              <span class="stat-card-value text-gold" id="stat-win-rate">0%</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-card-label">Total Won</span>
+              <span class="stat-card-value text-purple" id="stat-total-won">0 Coins</span>
+            </div>
+            <div class="stat-card" style="grid-column: span 2;">
+              <span class="stat-card-label">Best Multiplier</span>
+              <span class="stat-card-value text-cyan" id="stat-best-multiplier">1.00x</span>
+            </div>
+          </div>
+
+          <button type="button" class="btn-back-lobby" id="profile-invite-btn" style="width: 100%; justify-content: center; padding: 12px;">
+            <span>👥 Invite Friends & Earn +500 Coins</span>
+          </button>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 7: SETTINGS                         -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-settings">
+          <div class="game-header">
+            <h2 class="game-title">⚙️ Settings</h2>
+            <p class="game-description">Adjust your audio, haptic, and platform preferences.</p>
+          </div>
+
+          <div class="settings-group">
+            <div class="setting-row">
+              <div class="setting-text-block">
+                <span class="setting-name">Sound Effects</span>
+                <span class="setting-desc">Procedural Web Audio synthesizer</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-toggle-audio" checked>
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text-block">
+                <span class="setting-name">Haptic Feedback</span>
+                <span class="setting-desc">Device vibration on actions</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-toggle-haptics" checked>
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text-block">
+                <span class="setting-name">Telegram Simulator Bezel</span>
+                <span class="setting-desc">Frame preview for desktop browsers</span>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="setting-toggle-simulator" checked>
+                <span class="slider-switch"></span>
+              </label>
+            </div>
+
+            <div class="setting-row">
+              <div class="setting-text-block">
+                <span class="setting-name">Language</span>
+                <span class="setting-desc">Raika is strictly an English-only platform across all interfaces.</span>
+              </div>
+              <span class="game-badge badge-emerald">English (Only)</span>
+            </div>
+          </div>
+
+          <button type="button" class="btn-back-lobby" id="btn-reset-demo-data" style="width: 100%; justify-content: center; padding: 12px; color: var(--accent-red);">
+            <span>🔄 Reset Demo Data</span>
+          </button>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SCREEN 8: CASHIER & WALLET (SIMULATION)    -->
+        <!-- ========================================== -->
+        <section class="app-screen" id="screen-cashier">
+          <div class="game-header">
+            <div class="game-title-group">
+              <h2 class="game-title">🏦 Cashier & Wallet</h2>
+              <span class="game-badge badge-gold">Simulation Mode</span>
+            </div>
+            <p class="game-description">Simulate crypto deposits, test withdrawals, and inspect transaction ledgers.</p>
+          </div>
+
+          <!-- Cashier Overview Card -->
+          <div class="home-hero-card" style="margin-bottom: 14px; padding: 16px;">
+            <div class="hero-subtitle">Available Cashier Balance</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; margin: 4px 0 10px 0;">
+              <span style="font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--accent-gold);" id="cashier-balance-num">1,000</span>
+              <span style="color: #9CA3AF; font-size: 13px;">Demo Coins (~$<span id="cashier-fiat-num">10.00</span> USD)</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="stat-card" style="padding: 6px 8px;">
+                <span class="stat-card-label">Total Deposited</span>
+                <span class="stat-card-value text-emerald" id="cashier-total-dep">0 Coins</span>
+              </div>
+              <div class="stat-card" style="padding: 6px 8px;">
+                <span class="stat-card-label">Total Withdrawn</span>
+                <span class="stat-card-value text-purple" id="cashier-total-wth">0 Coins</span>
+              </div>
+            </div>
+            <div style="margin-top: 10px; font-size: 11px; color: #9CA3AF; text-align: center;">
+              Simulation Exchange Rate: <strong>1 USDT = 100 Demo Coins ($1.00 USD)</strong>
+            </div>
+          </div>
+
+          <!-- Cashier Sub-Tabs Navigation -->
+          <div class="history-filter-row" style="margin-bottom: 16px;">
+            <button type="button" class="filter-btn active" id="btn-cashier-tab-deposit">💳 Deposit</button>
+            <button type="button" class="filter-btn" id="btn-cashier-tab-withdraw">💸 Withdraw</button>
+            <button type="button" class="filter-btn" id="btn-cashier-tab-transactions">📜 Ledger</button>
+          </div>
+
+          <!-- SUB-TAB 1: DEPOSIT -->
+          <div id="cashier-view-deposit">
+            <div class="game-controls-panel">
+              <div class="control-label">Select Deposit Network</div>
+              <div class="side-selector-group" style="grid-template-columns: repeat(3, 1fr); gap: 6px;">
+                <button type="button" class="side-btn active" id="btn-asset-usdt" data-asset="USDT">
+                  <span class="side-icon">🟢</span>
+                  <span class="side-text" style="font-size: 12px;">USDT</span>
+                  <span class="side-multiplier" style="font-size: 9px;">TRC-20</span>
+                </button>
+                <button type="button" class="side-btn" id="btn-asset-ton" data-asset="TON">
+                  <span class="side-icon">💎</span>
+                  <span class="side-text" style="font-size: 12px;">TON</span>
+                  <span class="side-multiplier" style="font-size: 9px;">The Open Network</span>
+                </button>
+                <button type="button" class="side-btn" id="btn-asset-btc" data-asset="BTC">
+                  <span class="side-icon">₿</span>
+                  <span class="side-text" style="font-size: 12px;">BTC</span>
+                  <span class="side-multiplier" style="font-size: 9px;">Bitcoin</span>
+                </button>
+              </div>
+
+              <!-- Deposit Address Box -->
+              <div class="stake-control-block">
+                <div class="stake-header">
+                  <span class="control-label">Your Simulated Deposit Address</span>
+                  <span class="stake-payout-preview" style="color: var(--accent-emerald);">Network: TRC-20</span>
+                </div>
+                <div class="stake-input-wrapper">
+                  <input type="text" id="cashier-deposit-address" class="stake-input" readonly value="TX7KmQ9pL2vR8wY4sE1tN6zB3..." style="font-size: 12px; font-family: monospace;">
+                  <button type="button" class="chip-btn" id="btn-copy-deposit-addr" style="padding: 6px 12px; white-space: nowrap;">Copy</button>
+                </div>
+              </div>
+
+              <!-- Quick Top-Up Preset Packages -->
+              <div class="control-label" style="margin-top: 4px;">Instant Test Deposit Packages</div>
+              <div class="game-cards-grid" style="margin-bottom: 0;">
+                <div class="game-card-action cashier-dep-package" data-amount="10" style="padding: 12px;">
+                  <div style="font-size: 20px;">💵</div>
+                  <div style="font-weight: 800; font-size: 14px; color: #FFFFFF;">$10 USDT</div>
+                  <div style="font-size: 11px; color: var(--accent-gold);">+1,000 Coins</div>
+                </div>
+                <div class="game-card-action cashier-dep-package" data-amount="25" style="padding: 12px;">
+                  <div style="font-size: 20px;">💵</div>
+                  <div style="font-weight: 800; font-size: 14px; color: #FFFFFF;">$25 USDT</div>
+                  <div style="font-size: 11px; color: var(--accent-gold);">+2,500 Coins</div>
+                </div>
+                <div class="game-card-action cashier-dep-package" data-amount="50" style="padding: 12px;">
+                  <div style="font-size: 20px;">💵</div>
+                  <div style="font-weight: 800; font-size: 14px; color: #FFFFFF;">$50 USDT</div>
+                  <div style="font-size: 11px; color: var(--accent-gold);">+5,000 Coins</div>
+                </div>
+                <div class="game-card-action cashier-dep-package" data-amount="100" style="padding: 12px; border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.08);">
+                  <div style="font-size: 20px;">💎</div>
+                  <div style="font-weight: 800; font-size: 14px; color: var(--accent-gold);">$100 USDT</div>
+                  <div style="font-size: 11px; color: var(--accent-emerald);">+10,500 (+5% Bonus)</div>
+                </div>
+              </div>
+
+              <!-- Custom Amount -->
+              <div class="stake-control-block">
+                <div class="stake-header">
+                  <span class="control-label">Or Custom USDT Amount</span>
+                  <span class="stake-payout-preview" id="deposit-custom-coins-preview">Coins: +1,000</span>
+                </div>
+                <div class="stake-input-wrapper">
+                  <span class="stake-coin-icon">💵</span>
+                  <input type="number" id="cashier-custom-dep-input" class="stake-input" value="10" min="1" step="5">
+                </div>
+              </div>
+
+              <button type="button" class="action-btn btn-primary btn-large glow-gold" id="btn-simulate-deposit">
+                <span>Simulate Deposit Transfer</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- SUB-TAB 2: WITHDRAW -->
+          <div id="cashier-view-withdraw" style="display: none;">
+            <div class="game-controls-panel">
+              <div class="control-label">Select Withdrawal Asset</div>
+              <div class="side-selector-group">
+                <button type="button" class="side-btn active" id="btn-wth-asset-usdt" data-asset="USDT">
+                  <span class="side-icon">🟢</span>
+                  <span class="side-text">USDT</span>
+                  <span class="side-multiplier">TRC-20 Network</span>
+                </button>
+                <button type="button" class="side-btn" id="btn-wth-asset-ton" data-asset="TON">
+                  <span class="side-icon">💎</span>
+                  <span class="side-text">TON</span>
+                  <span class="side-multiplier">The Open Network</span>
+                </button>
+              </div>
+
+              <div class="stake-control-block">
+                <span class="control-label">Destination Wallet Address</span>
+                <div class="stake-input-wrapper">
+                  <input type="text" id="cashier-withdraw-address" class="stake-input" placeholder="Paste your wallet address here..." style="font-size: 12px; font-family: monospace;">
+                </div>
+              </div>
+
+              <div class="stake-control-block">
+                <div class="stake-header">
+                  <span class="control-label">Withdrawal Amount</span>
+                  <span class="stake-payout-preview" id="withdraw-fiat-preview">Value: ~$10.00 USD</span>
+                </div>
+                <div class="stake-input-wrapper">
+                  <span class="stake-coin-icon">🪙</span>
+                  <input type="number" id="cashier-withdraw-amount" class="stake-input" value="1000" min="1000" step="100">
+                </div>
+                <div class="stake-chip-presets">
+                  <button type="button" class="chip-btn" id="btn-wth-pct-25">25%</button>
+                  <button type="button" class="chip-btn" id="btn-wth-pct-50">50%</button>
+                  <button type="button" class="chip-btn" id="btn-wth-pct-75">75%</button>
+                  <button type="button" class="chip-btn" id="btn-wth-pct-max" style="grid-column: span 3;">MAX BALANCE</button>
+                </div>
+              </div>
+
+              <div style="font-size: 11px; color: #9CA3AF;">
+                ⚠️ Minimum withdrawal is <strong>1,000 Demo Coins ($10.00 USD)</strong>. Processed instantaneously in simulation mode.
+              </div>
+
+              <button type="button" class="action-btn btn-primary btn-large glow-purple" id="btn-simulate-withdraw">
+                <span>Submit Simulated Withdrawal</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- SUB-TAB 3: TRANSACTIONS LEDGER -->
+          <div id="cashier-view-transactions" style="display: none;">
+            <div class="history-filter-row" style="margin-bottom: 12px;">
+              <button type="button" class="filter-btn active" id="btn-tx-filter-all">All</button>
+              <button type="button" class="filter-btn" id="btn-tx-filter-dep">Deposits</button>
+              <button type="button" class="filter-btn" id="btn-tx-filter-wth">Withdrawals</button>
+            </div>
+            <div class="history-items-list" id="cashier-transactions-list">
+              <!-- Dynamically rendered -->
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Bottom Floating Glass Navigation -->
+      <nav class="app-nav-bar">
+        <button type="button" class="nav-item active" data-tab="home" id="nav-btn-home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home</span>
+        </button>
+
+        <button type="button" class="nav-item" data-tab="games" id="nav-btn-games">
+          <span class="nav-icon">🎲</span>
+          <span class="nav-label">Games</span>
+        </button>
+
+        <button type="button" class="nav-item" data-tab="bonus" id="nav-btn-bonus">
+          <span class="nav-icon">🎁</span>
+          <span class="nav-label">Bonus</span>
+        </button>
+
+        <button type="button" class="nav-item" data-tab="leaderboard" id="nav-btn-leaderboard">
+          <span class="nav-icon">🏆</span>
+          <span class="nav-label">Top</span>
+        </button>
+
+        <button type="button" class="nav-item" data-tab="history" id="nav-btn-history">
+          <span class="nav-icon">📜</span>
+          <span class="nav-label">History</span>
+        </button>
+
+        <button type="button" class="nav-item" data-tab="profile" id="nav-btn-profile">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Profile</span>
+        </button>
+
+        <button type="button" class="nav-item" data-tab="settings" id="nav-btn-settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </button>
+      </nav>
+
+      <!-- Referral / Invite Modal -->
+      <div class="app-modal" id="modal-referral">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content-card">
+          <button type="button" class="modal-close-btn" id="btn-close-ref-modal">✕</button>
+          
+          <div class="game-header" style="text-align: center; margin-bottom: 14px;">
+            <div style="font-size: 36px; margin-bottom: 6px;">👥</div>
+            <h2 class="game-title">Invite Friends</h2>
+            <p class="game-description">Earn <strong class="text-gold">+500 Demo Coins</strong> for every friend who joins Raika using your link!</p>
+          </div>
+
+          <div class="stake-input-wrapper" style="margin-bottom: 12px;">
+            <input type="text" id="referral-link-input" class="stake-input" readonly value="https://t.me/raika_bot?start=ref_..." style="font-size: 13px;">
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button type="button" class="action-btn btn-primary btn-large glow-gold" id="btn-copy-ref-link">
+              <span>Copy Referral Link</span>
+            </button>
+            <button type="button" class="btn-back-lobby" id="btn-share-telegram" style="justify-content: center; padding: 12px;">
+              <span>Share to Telegram</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Receipt Modal -->
+      <div class="app-modal" id="modal-receipt">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content-card">
+          <button type="button" class="modal-close-btn" id="btn-close-receipt-modal">✕</button>
+          
+          <div class="game-header" style="text-align: center; margin-bottom: 14px;">
+            <div style="font-size: 40px; margin-bottom: 4px;" id="receipt-type-icon">✅</div>
+            <h2 class="game-title" id="receipt-title-text">Transaction Receipt</h2>
+            <div class="game-badge badge-emerald" id="receipt-status-badge" style="display: inline-block; margin-top: 4px;">Confirmed on Blockchain</div>
+          </div>
+
+          <div style="background: var(--bg-surface-elevated); border-radius: var(--radius-md); padding: 14px; margin-bottom: 16px; font-size: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: #9CA3AF;">Transaction Type:</span>
+              <strong id="receipt-type-val" style="color: #FFFFFF;">Deposit</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: #9CA3AF;">Amount:</span>
+              <strong id="receipt-amount-val" style="color: var(--accent-gold);">+1,000 Coins ($10.00 USDT)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: #9CA3AF;">Network:</span>
+              <strong id="receipt-network-val" style="color: #FFFFFF;">Tron (TRC-20)</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+              <span style="color: #9CA3AF;">Address:</span>
+              <span id="receipt-address-val" style="color: #9CA3AF; font-family: monospace;">TX7K...</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: #9CA3AF;">TX Hash:</span>
+              <span id="receipt-hash-val" style="color: #9CA3AF; font-family: monospace;">0x7a8...</span>
+            </div>
+          </div>
+
+          <button type="button" class="action-btn btn-primary btn-large glow-gold" id="btn-receipt-done" style="width: 100%;">
+            <span>Done</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/strings.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/telegram.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/games/coinflip.js"></script>
+  <script src="js/games/dice.js"></script>
+  <script src="js/games/crash.js"></script>
+  <script src="js/games/mines.js"></script>
+  <script src="js/games/wheel.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

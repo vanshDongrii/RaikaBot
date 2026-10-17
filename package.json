@@ -1,0 +1,29 @@
+{
+  "name": "raika-telegram-platform",
+  "version": "1.0.0",
+  "description": "Raika Gaming Telegram Bot and Telegram Mini App - 100% English-Only Edition",
+  "main": "server/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "audit:language": "node scripts/audit-language.js",
+    "test": "node scripts/test-api.js"
+  },
+  "keywords": [
+    "telegram-bot",
+    "telegram-mini-app",
+    "raika",
+    "games",
+    "demo-coins",
+    "english-only"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "telegraf": "^4.16.3"
+  }
+}
