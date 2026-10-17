@@ -61,15 +61,20 @@ module.exports = {
 
   // Bot Messages
   messages: {
-    welcome: `🎮 *Welcome to Raika Games!*
+    welcome: `🦊 Welcome to Raika Game
 
-Ready to play? Enjoy thrilling demo games, claim free daily bonuses, and climb the leaderboard!
+  ⭐ Raika Game offers the best online mini-games on Telegram
 
-💰 *Your Starting Balance:* {balance} Demo Coins
-🔥 *Daily Bonus:* Available now!
-🎲 *Available Games:* Coin Flip, Dice, Crash, Mines, Wheel of Fortune
+  📢 How to start playing?
+  1. Start with your free Demo Coins. Deposits and withdrawals are simulations only.
+  2. Use Bonuses to invite friends and earn Demo Coins.
+  3. Enter /play or tap Play to start playing!
 
-Tap *Launch Mini App* below for the full high-speed visual experience!`,
+  💳 Balance: {balance} Demo Coins
+  👑 Wagers: {wagers} Demo Coins
+
+  🌐 About us
+  Portal | Channel | Chat | Support | FAQ`,
 
     play: `🎲 *Choose a Game to Start Playing*
 
@@ -256,9 +261,14 @@ Please lower your stake or claim your daily bonus / free refill.`,
 
   // Buttons & Labels (Inline & Reply Keyboards)
   buttons: {
+    play: '🎮 Play',
+    profile: '👤 Profile',
+    bonuses: '🎁 Bonuses',
+    depositDemo: '💰 Deposit (Demo)',
+    withdrawDemo: '💸 Withdraw (Demo)',
     launchMiniApp: '🚀 Launch Mini App',
     playGames: '🎲 Play Games',
-    dailyBonus: '🎁 Claim Daily Bonus',
+    dailyBonus: '🎁 Daily Bonus',
     leaderboard: '🏆 Leaderboard',
     myProfile: '👤 My Profile',
     demoBalance: '💰 Demo Balance',

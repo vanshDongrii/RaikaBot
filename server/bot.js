@@ -20,35 +20,31 @@ function createBot(token, webAppUrl = '') {
     return template.replace(/\{(\w+)\}/g, (_, key) => vars[key] !== undefined ? vars[key] : '');
   }
 
+  function getWelcomeMessage(user) {
+    return format(strings.messages.welcome, {
+      balance: user.demo_balance.toLocaleString(),
+      wagers: (user.total_wagered || 0).toLocaleString()
+    });
+  }
+
   // Common main inline keyboard
   function getMainMenuKeyboard(userId) {
     const isHttps = Boolean(webAppUrl && webAppUrl.startsWith('https://'));
-    const miniAppButton = isHttps
-      ? Markup.button.webApp(strings.buttons.launchMiniApp, `${webAppUrl}?userId=${userId}`)
-      : Markup.button.callback(strings.buttons.launchMiniApp, 'open_miniapp_info');
+    const playButton = isHttps
+      ? Markup.button.webApp(strings.buttons.play, `${webAppUrl}?userId=${userId}&tab=games`)
+      : Markup.button.callback(strings.buttons.play, 'cmd_play');
 
     return Markup.inlineKeyboard([
-      [miniAppButton],
+      [playButton],
       [
-        Markup.button.callback(strings.buttons.playGames, 'cmd_play'),
-        Markup.button.callback(strings.buttons.dailyBonus, 'cmd_bonus')
+        Markup.button.callback(strings.buttons.withdrawDemo, 'cmd_withdraw'),
+        Markup.button.callback(strings.buttons.depositDemo, 'cmd_deposit')
       ],
       [
-        Markup.button.callback(strings.buttons.cashier, 'cmd_cashier'),
-        Markup.button.callback(strings.buttons.deposit, 'cmd_deposit')
+        Markup.button.callback(strings.buttons.profile, 'cmd_profile'),
+        Markup.button.callback(strings.buttons.bonuses, 'cmd_referral')
       ],
-      [
-        Markup.button.callback(strings.buttons.leaderboard, 'cmd_top'),
-        Markup.button.callback(strings.buttons.myProfile, 'cmd_profile')
-      ],
-      [
-        Markup.button.callback(strings.buttons.demoBalance, 'cmd_balance'),
-        Markup.button.callback(strings.buttons.inviteFriends, 'cmd_referral')
-      ],
-      [
-        Markup.button.callback(strings.buttons.gameHistory, 'cmd_matches'),
-        Markup.button.callback(strings.buttons.help, 'cmd_help')
-      ]
+      [Markup.button.callback(strings.buttons.dailyBonus, 'cmd_bonus')]
     ]);
   }
 
@@ -66,9 +62,7 @@ function createBot(token, webAppUrl = '') {
       }
     }
 
-    const text = format(strings.messages.welcome, {
-      balance: user.demo_balance.toLocaleString()
-    });
+    const text = getWelcomeMessage(user);
 
     return ctx.replyWithMarkdown(text, getMainMenuKeyboard(user.id));
   });
@@ -337,9 +331,7 @@ function createBot(token, webAppUrl = '') {
   bot.action('cmd_start', (ctx) => {
     ctx.answerCbQuery();
     const user = db.getOrCreateUser(ctx.from);
-    const text = format(strings.messages.welcome, {
-      balance: user.demo_balance.toLocaleString()
-    });
+    const text = getWelcomeMessage(user);
     return ctx.editMessageText(text, { parse_mode: 'Markdown', ...getMainMenuKeyboard(user.id) });
   });
 
